@@ -45,7 +45,7 @@ public class BasicGameApp implements Runnable, KeyListener {
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
 	private Astronaut astro;
-
+	public Image Background;
 
    // Main method definition
    // This is the code that runs first and automatically
@@ -68,7 +68,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 		astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the picture
 		astro = new Astronaut(10,100);
 
-
+		Background = Toolkit.getDefaultToolkit().getImage("arcade.png");
 	}// BasicGameApp()
 
    
@@ -146,6 +146,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 		g.clearRect(0, 0, WIDTH, HEIGHT);
 
       //draw the image of the astronaut
+		g.drawImage(Background,0, 0 ,1000, 700,  null);
 		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
 
 		g.dispose();
