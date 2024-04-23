@@ -42,11 +42,12 @@ public class BasicGameApp implements Runnable, KeyListener {
 	public BufferStrategy bufferStrategy;
 	public Image astroPic;
 	public Image zombPic;
-
+	public Image Brainpic;
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
 	private Astronaut astro;
 	public Zombie zomb;
+	public Brain brain;
 	public Image Background;
 
    // Main method definition
@@ -69,9 +70,10 @@ public class BasicGameApp implements Runnable, KeyListener {
       //create (construct) the objects needed for the game and load up 
 		astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the picture
 		zombPic = Toolkit.getDefaultToolkit().getImage("zombie.png");
-		zomb = new Zombie (50,100);
+		Brainpic = Toolkit.getDefaultToolkit().getImage("brain.png");
+		zomb = new Zombie (50,550);
 		astro = new Astronaut(10,100);
-
+		brain = new Brain(50,0);
 		Background = Toolkit.getDefaultToolkit().getImage("arcade.png");
 	}// BasicGameApp()
 
@@ -99,7 +101,9 @@ public class BasicGameApp implements Runnable, KeyListener {
 	{
       //calls the move( ) code in the objects
 		astro.move();
-		zomb.move();
+		zomb.Bounce();
+		brain.move();
+	;
 	}
 	
    //Pauses or sleeps the computer for the amount specified in milliseconds
@@ -153,6 +157,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 		g.drawImage(Background,0, 0 ,1000, 700,  null);
 		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
 		g.drawImage(zombPic, zomb.xpos, zomb.ypos, zomb.width, zomb.height, null);
+		g.drawImage(Brainpic, brain.xpos, brain.ypos, brain.width, brain.height, null);
 		g.dispose();
 
 		bufferStrategy.show();
@@ -165,11 +170,30 @@ public class BasicGameApp implements Runnable, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+
+		if(e.getKeyCode()==37){
+			zomb.dx=-5;
+			zomb.dy=0;
+		}
+		if(e.getKeyCode()==38) {
+			zomb.dx = 0;
+			zomb.dy = -5;
+		}
+		if(e.getKeyCode()==39){
+			zomb.dx=5;
+			zomb.dy=0;
+		}
+		if(e.getKeyCode()==40){
+			zomb.dx=0;
+			zomb.dy=5;
+		}
 		System.out.println("pressed key" + e.getKeyChar() + "with key code" + e.getKeyCode());
 		if (e.getKeyCode() == 32) { //spacebar
 			System.out.println("Space bar");
 		}
+
 	}
+
 
 	@Override
 	public void keyReleased(KeyEvent e) {
