@@ -41,10 +41,12 @@ public class BasicGameApp implements Runnable, KeyListener {
    
 	public BufferStrategy bufferStrategy;
 	public Image astroPic;
+	public Image zombPic;
 
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
 	private Astronaut astro;
+	public Zombie zomb;
 	public Image Background;
 
    // Main method definition
@@ -66,6 +68,8 @@ public class BasicGameApp implements Runnable, KeyListener {
       //variable and objects
       //create (construct) the objects needed for the game and load up 
 		astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the picture
+		zombPic = Toolkit.getDefaultToolkit().getImage("zombie.png");
+		zomb = new Zombie (50,100);
 		astro = new Astronaut(10,100);
 
 		Background = Toolkit.getDefaultToolkit().getImage("arcade.png");
@@ -95,7 +99,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 	{
       //calls the move( ) code in the objects
 		astro.move();
-
+		zomb.move();
 	}
 	
    //Pauses or sleeps the computer for the amount specified in milliseconds
@@ -148,7 +152,7 @@ public class BasicGameApp implements Runnable, KeyListener {
       //draw the image of the astronaut
 		g.drawImage(Background,0, 0 ,1000, 700,  null);
 		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
-
+		g.drawImage(zombPic, zomb.xpos, zomb.ypos, zomb.width, zomb.height, null);
 		g.dispose();
 
 		bufferStrategy.show();
