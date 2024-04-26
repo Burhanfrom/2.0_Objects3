@@ -47,6 +47,7 @@ public class BasicGameApp implements Runnable, KeyListener {
    //These are things that are made up of more than one variable type
 	private Astronaut astro;
 	public Zombie zomb;
+	public Zombie[] azomb;
 	public Brain brain;
 	public Image Background;
 
@@ -72,6 +73,9 @@ public class BasicGameApp implements Runnable, KeyListener {
 		zombPic = Toolkit.getDefaultToolkit().getImage("zombie.png");
 		Brainpic = Toolkit.getDefaultToolkit().getImage("brain.png");
 		zomb = new Zombie (50,550);
+		azomb = new Zombie[100];
+		for (int i = 0; i < azomb.length; i++) {
+			azomb[i] = new Zombie((int) (Math.random() * 1001), (int) (Math.random() * 700));
 		astro = new Astronaut(10,100);
 		brain = new Brain(50,0);
 		Background = Toolkit.getDefaultToolkit().getImage("arcade.png");
@@ -102,6 +106,12 @@ public class BasicGameApp implements Runnable, KeyListener {
       //calls the move( ) code in the objects
 		astro.move();
 		zomb.Bounce();
+		for (int i = 0; i < azomb.length; i++) {
+			azomb[i].Bounce();
+			if(azomb[i].rec.intersects(zomb.rec)){
+				System.out.println("Crash");
+			}
+		}
 		brain.move();
 	;
 	}
@@ -157,6 +167,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 		g.drawImage(Background,0, 0 ,1000, 700,  null);
 		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
 		g.drawImage(zombPic, zomb.xpos, zomb.ypos, zomb.width, zomb.height, null);
+
 		g.drawImage(Brainpic, brain.xpos, brain.ypos, brain.width, brain.height, null);
 		g.dispose();
 
