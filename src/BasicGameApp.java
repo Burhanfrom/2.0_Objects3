@@ -73,12 +73,12 @@ public class BasicGameApp implements Runnable, KeyListener {
 		zombPic = Toolkit.getDefaultToolkit().getImage("zombie.png");
 		Brainpic = Toolkit.getDefaultToolkit().getImage("brain.png");
 		zomb = new Zombie (50,550);
-		abrain = new Brain[][100];
+		abrain = new Brain[100];
 		for (int i = 0; i < abrain.length; i++) {
-			abrain[i] = new Brain ((int) (Math.random() * 1001), (int) (Math.random() * 700));
+			abrain[i] = new Brain ((int) (Math.random() * 1001), (int) (Math.random() * 2000)-2000);
 		}
 		astro = new Astronaut(10,100);
-		brain = new Brain(50,0);
+		//brain = new Brain(50,0);
 		Background = Toolkit.getDefaultToolkit().getImage("arcade.png");
 	}// BasicGameApp()
 
@@ -106,15 +106,15 @@ public class BasicGameApp implements Runnable, KeyListener {
 	{
       //calls the move( ) code in the objects
 		astro.move();
-		Brain.Bounce();
+		//Brain.Bounce();
 		for (int i = 0; i < abrain.length; i++) {
 			abrain[i].Bounce();
-			if(abrain[i].rec.intersects(brain.rec)){
+			if(abrain[i].rec.intersects(zomb.rec)){
 				System.out.println("Crash");
 			}
 		}
-		Brain.move();
-
+		//Brain.move();
+			zomb.Bounce();
 	}
 	
    //Pauses or sleeps the computer for the amount specified in milliseconds
@@ -167,15 +167,15 @@ public class BasicGameApp implements Runnable, KeyListener {
       //draw the image of the astronaut
 		g.drawImage(Background,0, 0 ,1000, 700,  null);
 		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
-		//g.drawImage(zombPic, zomb.xpos, zomb.ypos, zomb.width, zomb.height, null);
+		g.drawImage(zombPic, zomb.xpos, zomb.ypos, zomb.width, zomb.height, null);
 	//	for (int i = 0; i < azomb.length; i++) {
 		//g.drawImage(zombPic, azomb[i].xpos, azomb[i].ypos, azomb[i].width, azomb[i].height, null);
-		}
+		//}
 
-		g.drawImage(Brainpic, brain.xpos, brain.ypos, brain.width, brain.height, null);
+		//g.drawImage(Brainpic, brain.xpos, brain.ypos, brain.width, brain.height, null);
 		for (int i = 0; i < abrain.length; i++) {
-			g.drawImage(zombPic, abrain[i].xpos, abrain[i].ypos, abrain[i].width, abrain[i].height, null);
-
+			g.drawImage(Brainpic, abrain[i].xpos, abrain[i].ypos, abrain[i].width, abrain[i].height, null);
+		}
 			g.dispose();
 
 		bufferStrategy.show();
@@ -188,7 +188,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-
+		System.out.println(e.getKeyCode());
 		if(e.getKeyCode()==37){
 			zomb.dx=-5;
 			zomb.dy=0;
