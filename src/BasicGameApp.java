@@ -75,7 +75,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 		zomb = new Zombie (50,550);
 		abrain = new Brain[100];
 		for (int i = 0; i < abrain.length; i++) {
-			abrain[i] = new Brain ((int) (Math.random() * 1001), (int) (Math.random() * 2000)-2000);
+			abrain[i] = new Brain ((int) (Math.random() * 1001), (int) (Math.random() * 8000)-8000);
 		}
 		astro = new Astronaut(10,100);
 		//brain = new Brain(50,0);
@@ -110,7 +110,8 @@ public class BasicGameApp implements Runnable, KeyListener {
 		for (int i = 0; i < abrain.length; i++) {
 			abrain[i].Bounce();
 			if(abrain[i].rec.intersects(zomb.rec)){
-				System.out.println("Crash");
+				System.out.println("+1");
+				abrain[i].isAlive=false;
 			}
 		}
 		//Brain.move();
@@ -174,7 +175,9 @@ public class BasicGameApp implements Runnable, KeyListener {
 
 		//g.drawImage(Brainpic, brain.xpos, brain.ypos, brain.width, brain.height, null);
 		for (int i = 0; i < abrain.length; i++) {
-			g.drawImage(Brainpic, abrain[i].xpos, abrain[i].ypos, abrain[i].width, abrain[i].height, null);
+			if(abrain[i].isAlive==true) {
+				g.drawImage(Brainpic, abrain[i].xpos, abrain[i].ypos, abrain[i].width, abrain[i].height, null);
+			}
 		}
 			g.dispose();
 
