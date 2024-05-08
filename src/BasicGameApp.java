@@ -50,7 +50,8 @@ public class BasicGameApp implements Runnable, KeyListener {
 	//public Zombie[] azomb;
 	public Brain[] abrain;
 	public Image Background;
-
+	public Image Background2;
+	public int Score;
    // Main method definition
    // This is the code that runs first and automatically
 	public static void main(String[] args) {
@@ -69,7 +70,7 @@ public class BasicGameApp implements Runnable, KeyListener {
        
       //variable and objects
       //create (construct) the objects needed for the game and load up 
-		astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the picture
+		astroPic = Toolkit.getDefaultToolkit().getImage("Liquid.jpg"); //load the picture
 		zombPic = Toolkit.getDefaultToolkit().getImage("zombie.png");
 		Brainpic = Toolkit.getDefaultToolkit().getImage("brain.png");
 		zomb = new Zombie (50,550);
@@ -80,6 +81,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 		astro = new Astronaut(10,100);
 		//brain = new Brain(50,0);
 		Background = Toolkit.getDefaultToolkit().getImage("arcade.png");
+		Background2 = Toolkit.getDefaultToolkit().getImage("download.png");
 	}// BasicGameApp()
 
    
@@ -106,6 +108,12 @@ public class BasicGameApp implements Runnable, KeyListener {
 	{
       //calls the move( ) code in the objects
 		astro.move();
+		if(zomb.rec.intersects(astro.rec)) {
+			System.out.println("+1");
+			Score+=1;
+			zomb.isAlive = false;
+		}
+
 		//Brain.Bounce();
 		for (int i = 0; i < abrain.length; i++) {
 			abrain[i].Bounce();
@@ -113,7 +121,10 @@ public class BasicGameApp implements Runnable, KeyListener {
 				System.out.println("+1");
 				abrain[i].isAlive=false;
 			}
-		}
+
+
+
+			}
 		//Brain.move();
 			zomb.Bounce();
 	}
@@ -165,19 +176,31 @@ public class BasicGameApp implements Runnable, KeyListener {
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 		g.clearRect(0, 0, WIDTH, HEIGHT);
 
-      //draw the image of the astronaut
-		g.drawImage(Background,0, 0 ,1000, 700,  null);
-		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
-		g.drawImage(zombPic, zomb.xpos, zomb.ypos, zomb.width, zomb.height, null);
-	//	for (int i = 0; i < azomb.length; i++) {
-		//g.drawImage(zombPic, azomb[i].xpos, azomb[i].ypos, azomb[i].width, azomb[i].height, null);
-		//}
+		if(zomb.isAlive==true) {
+			//draw the image of the astronaut
+			g.drawImage(Background, 0, 0, 1000, 700, null);
+			g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
 
-		//g.drawImage(Brainpic, brain.xpos, brain.ypos, brain.width, brain.height, null);
-		for (int i = 0; i < abrain.length; i++) {
-			if(abrain[i].isAlive==true) {
-				g.drawImage(Brainpic, abrain[i].xpos, abrain[i].ypos, abrain[i].width, abrain[i].height, null);
+
+			g.drawImage(zombPic, zomb.xpos, zomb.ypos, zomb.width, zomb.height, null);
+
+			//	for (int i = 0; i < azomb.length; i++) {
+			//g.drawImage(zombPic, azomb[i].xpos, azomb[i].ypos, azomb[i].width, azomb[i].height, null);
+			//}
+
+			//g.drawImage(Brainpic, brain.xpos, brain.ypos, brain.width, brain.height, null);
+			for (int i = 0; i < abrain.length; i++) {
+				if (abrain[i].isAlive == true) {
+					g.drawImage(Brainpic, abrain[i].xpos, abrain[i].ypos, abrain[i].width, abrain[i].height, null);
+				}
 			}
+		}else {
+			//draw something else
+			g.drawImage(Background2, 0, 0, 1000, 700, null);
+
+			g.setColor(Color.white);
+			g.drawRect(200,190,60,20);
+			g.drawString("Score;"+Score,200,200);
 		}
 			g.dispose();
 
@@ -193,20 +216,20 @@ public class BasicGameApp implements Runnable, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		System.out.println(e.getKeyCode());
 		if(e.getKeyCode()==37){
-			zomb.dx=-5;
+			zomb.dx=-10;
 			zomb.dy=0;
 		}
 		if(e.getKeyCode()==38) {
 			zomb.dx = 0;
-			zomb.dy = -5;
+			zomb.dy = -10;
 		}
 		if(e.getKeyCode()==39){
-			zomb.dx=5;
+			zomb.dx=10;
 			zomb.dy=0;
 		}
 		if(e.getKeyCode()==40){
 			zomb.dx=0;
-			zomb.dy=5;
+			zomb.dy=10;
 		}
 		System.out.println("pressed key" + e.getKeyChar() + "with key code" + e.getKeyCode());
 		if (e.getKeyCode() == 32) { //spacebar
